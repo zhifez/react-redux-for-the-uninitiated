@@ -14,24 +14,46 @@ export default function Todos () {
     createTodo ( 'Fix computer' ),
     createTodo ( 'Upgrade TV firmware' )
   ] );
+  const [ newTodoTitle, setNewTodoTitle ] = useState ( '' );
 
-  const onChangeTodo = ( index ) => ( { target: value } ) => {
+  const onToggleTodo = ( index ) => ( { target: value } ) => {
     const nextTodos = [ ...todos ];
     nextTodos[ index ].isChecked = value.checked;
     setTodos ( nextTodos );
   }
 
+  const onDeleteTodo = ( index ) => {
+    const nextTodos = [ ...todos ];
+    nextTodos.splice ( index, 1 );
+    setTodos ( nextTodos );
+  }
+
+  const onCreateTodo = ( e ) => {
+    e.preventDefault ();
+    if ( !!newTodoTitle && newTodoTitle.length >= 0 ) {
+      const nextTodos = [ ...todos ];
+      nextTodos.push ( createTodo ( newTodoTitle ) );
+      setTodos ( nextTodos );
+      setNewTodoTitle ( '' );
+    }
+  }
+
   return (
     <>
       <h1>Todos with useState</h1>
-      <ul style={{width: 200}}>
+      <ul>
         {todos.map ( ( todo, index ) =>
-        <li key={index} className={'flex-center'}>
+        <li key={index} className={'flex-center mb-2'}>
+          <button className={'bg-red mr-2'}
+            onClick={() => onDeleteTodo ( index )}
+          >
+            X
+          </button>
           <input 
             className={'mr-2'}
             type={'checkbox'} 
             checked={todo.isChecked} 
-            onChange={onChangeTodo ( index )} 
+            onChange={onToggleTodo ( index )} 
           />
           <span
             style={{
@@ -40,6 +62,16 @@ export default function Todos () {
           >{todo.title}</span>
         </li>)}
       </ul>
+      <form className={'flex-center'} onSubmit={onCreateTodo}>
+        <input 
+          type={'text'} 
+          name={'title'} 
+          className={'mr-2'} 
+          value={newTodoTitle}
+          onChange={e => setNewTodoTitle ( e.target.value )}
+        />
+        <button type={'submit'}>Add Todo</button>
+      </form>
     </>
   ); 
 }

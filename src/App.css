@@ -45,3 +45,12 @@
 .mr-2 {
   margin-right: 1rem;
 }
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.bg-red {
+  background-color: red;
+  color: white;
+}
