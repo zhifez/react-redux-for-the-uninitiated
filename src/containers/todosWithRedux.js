@@ -4,7 +4,7 @@ import * as todoActions from '../redux/actions/todo.action';
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    todos: state.todoReducer.todos
   };
 }
 
