@@ -25,7 +25,6 @@ export default function reducer ( state = initialState, action ) {
     };
 
   case CAT_FACTS_LOAD_SUCCESS:
-    console.log ( action.data );
     return {
       ...initialState,
       data: action.data
